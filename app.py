@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# trying to add file browser for user instead of entering file information
+
 """Loan Qualifier Application.
 
 This is a command line application to match applicants with qualifying loans.
@@ -6,12 +8,16 @@ This is a command line application to match applicants with qualifying loans.
 Example:
     $ python app.py
 """
+
+# import statements for necessary modules
 import sys
 import fire
 import questionary
 from pathlib import Path
 
-from qualifier.utils.fileio import load_csv
+
+# import statements for associated functions
+from qualifier.utils.fileio import load_csv, save_csv
 
 from qualifier.utils.calculators import (
     calculate_monthly_debt_ratio,
@@ -23,27 +29,34 @@ from qualifier.filters.credit_score import filter_credit_score
 from qualifier.filters.debt_to_income import filter_debt_to_income
 from qualifier.filters.loan_to_value import filter_loan_to_value
 
-
+# Defining function for reading csv file from specified path
 def load_bank_data():
     """Ask for the file path to the latest banking data and load the CSV file.
 
     Returns:
         The bank data from the data rate sheet CSV file.
     """
+    # implemented a try/catch block to notify user if entered information incorrectly
+    try:
+        csvpath = questionary.text("Enter a file path to a rate-sheet (.csv) - Suggestion: './data/daily_rate_sheet.csv' ").ask()
+        csvpath = Path(csvpath)
+        if not csvpath.exists():
+            # friendly catch to notify user if path incorrect
+            sys.exit(f"Oops! Can't find this path: {csvpath}")
 
-    csvpath = questionary.text("Enter a file path to a rate-sheet (.csv):").ask()
-    csvpath = Path(csvpath)
-    if not csvpath.exists():
-        sys.exit(f"Oops! Can't find this path: {csvpath}")
+        return load_csv(csvpath)
+    # raise exception if anything else was incorrect
+    except Exception as e:
+        print("You entered an incorrect file path:")
+        print(e, e.__doc__, type(e), sep='\n')
 
-    return load_csv(csvpath)
-
-
+# Defining function for user to enter their application information
 def get_applicant_info():
     """Prompt dialog to get the applicant's financial information.
 
     Returns:
-        Returns the applicant's financial information.
+        Returns the applicant's financial information:
+        credit score, debt, income, loan amount and home value.
     """
 
     credit_score = questionary.text("What's your credit score?").ask()
@@ -60,7 +73,7 @@ def get_applicant_info():
 
     return credit_score, debt, income, loan_amount, home_value
 
-
+# defining function to filter banks according to user data
 def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_value):
     """Determine which loans the user qualifies for.
 
@@ -110,8 +123,31 @@ def save_qualifying_loans(qualifying_loans):
     """
     # @TODO: Complete the usability dialog for savings the CSV Files.
     # YOUR CODE HERE!
+    # Get user confirmation if they want to save to a file
+    ask_user = questionary.confirm("Save this this list to a file?").ask()
+    # inserted try and catch block to notify user if anything was entered incorrectly
+    try:
+        if ask_user:
+            # gives the user the correct path file associated with this application and autocompletes real file paths
+            csv_file_path = questionary.path("Type in valid path including desired name of file: suggested: './data\<name_of_file>.csv' ").ask()
+            # if not csv_file_path.exists():
+            #     # simpler try/catch statement
+            #     sys.exit(f"Oops! Can't find this path: {csv_file_path}")
+            save_csv(csv_file_path, qualifying_loans)
+            # This ensures the user that the file was saved
+            print("file saved successfully")
+            print()
+            print()
+            print("application has exited")
+        else:
+            print("Nothing was saved")
+            
+    # Exception will give the user helpful hints if their file path was incorrect         
+    except Exception as e:
+        print("Did you remember to create a name.csv for your file path?")
+        print(e, e.__doc__, type(e), sep='\n')
 
-
+# Defining main run function for application
 def run():
     """The main function for running the script."""
 
@@ -129,6 +165,7 @@ def run():
     # Save qualifying loans
     save_qualifying_loans(qualifying_loans)
 
-
+# runs this file if name is __main__ and not imported
 if __name__ == "__main__":
+    # use helpful fire application for CLI ease
     fire.Fire(run)
