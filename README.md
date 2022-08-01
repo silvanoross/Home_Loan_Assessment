@@ -1,4 +1,4 @@
-# Home Loan Application 
+# Module 2 Challenge - Home Loan Application 
 
 This project will help those who want to find a bank that will give them a desired home loan. The user must input their credit score, monthly income, debt, desired loan amount, and the value of the house they will use their loan to buy. The application will then provide a list of banks that will most likely allow the user to take out the desire loan based on the credit score, debt-to-income ratio and loan-to-value ratio calculated within the app. 
 
@@ -10,7 +10,7 @@ Language: Python 3.9.12
 
 Libraries used not included in python:
 
-git[Fire](https://github.com/google/python-fire) - For seamlessly running the application from the CLI
+[Fire](https://github.com/google/python-fire) - For seamlessly running the application from the CLI
 
 [Questionary](https://github.com/tmbo/questionary) - For interactive user prompts and easy entry
 
@@ -41,6 +41,7 @@ or if you have an identically formatted csv file you may direct the application 
 that file path.
 
 Next: Enter in your credit score followed by the monthly values for debt and income. Enter the requested loan amount and the value of the house you are to use the loan for.
+
 Finally: if you have a list of loans you would like to save enter a file path and then give your csv a <name_of_list>.csv. Your .csv file will be created. It is recommended
 to format your file entry as ./data\<name_of_list.csv> so the program stores your file in the same location as the intial .csv file read.
 

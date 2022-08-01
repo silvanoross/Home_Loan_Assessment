@@ -124,23 +124,29 @@ def save_qualifying_loans(qualifying_loans):
     # @TODO: Complete the usability dialog for savings the CSV Files.
     # YOUR CODE HERE!
     # Get user confirmation if they want to save to a file
-    ask_user = questionary.confirm("Save this this list to a file?").ask()
+    
     # inserted try and catch block to notify user if anything was entered incorrectly
     try:
-        if ask_user:
-            # gives the user the correct path file associated with this application and autocompletes real file paths
-            csv_file_path = questionary.path("Type in valid path including desired name of file: suggested: './data\<name_of_file>.csv' ").ask()
-            # if not csv_file_path.exists():
-            #     # simpler try/catch statement
-            #     sys.exit(f"Oops! Can't find this path: {csv_file_path}")
-            save_csv(csv_file_path, qualifying_loans)
-            # This ensures the user that the file was saved
-            print("file saved successfully")
-            print()
-            print()
-            print("application has exited")
+        if len(qualifying_loans) >= 1:
+            ask_user = questionary.confirm("Save this this list to a file?").ask()
+            if ask_user:
+                # gives the user the correct path file associated with this application and autocompletes real file paths
+                csv_file_path = questionary.path("Type in valid path including desired name of file: suggested: './data\<name_of_file>.csv' ").ask()
+                # if not csv_file_path.exists():
+                #     # simpler try/catch statement
+                #     sys.exit(f"Oops! Can't find this path: {csv_file_path}")
+                save_csv(csv_file_path, qualifying_loans)
+                # This ensures the user that the file was saved
+                print("file saved successfully")
+                print()
+                print()
+                print("application has exited")
+            else:
+                print("Nothing was saved")
         else:
-            print("Nothing was saved")
+            print("The criteria given did not match with any loans in the bank list.")
+            print()
+            print("Please re-run application with different criteria")
             
     # Exception will give the user helpful hints if their file path was incorrect         
     except Exception as e:
@@ -161,7 +167,7 @@ def run():
     qualifying_loans = find_qualifying_loans(
         bank_data, credit_score, debt, income, loan_amount, home_value
     )
-
+      
     # Save qualifying loans
     save_qualifying_loans(qualifying_loans)
 
