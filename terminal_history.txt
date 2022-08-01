@@ -1,0 +1,50 @@
+  201  git status
+  202  git add README.md
+  203  git commit -m "took out link to unneeded image"
+  204  git push
+  205  python app.py
+  206  conda deactivate
+  207  exit
+  208  cd FinTech-Workspace
+  209  ls
+  210  cd ..
+  211  cd GH_Stage
+  212  ls
+  213  cd Module_2_Challenge
+  214  code .
+  215  git status
+  216  git add -A
+  217  git status
+  218  git commit -m "finished app and nearly finished README"
+  219  git push
+  220  exit
+  221  conda info --envs
+  222  conda activate dev
+  223  pwd
+  224  cd GH_Stage
+  225  ls
+  226  cd Module_2_Challenge
+  227  ls
+  228  python app.py
+  229  pip install fire
+  230  pip install questionary
+  231  python app.py
+  232  conda deactivate
+  233  exit
+  234  cd GH_Stage
+  235  code .
+  236  cd Module_2_Challenge
+  237  code .
+  238  git status
+  239  git add -A
+  240  git status
+  241  git commit =m "Fixed spacing in README and added exit when 0 loans"
+  242  git commit -m "Fixed spacing in README and added scit when 0 loans"
+  243  git push
+  244  git status
+  245  git status
+  246  git add README.md
+  247  git status
+  248  git commit -m "Polished the README a bit more"
+  249  git push
+  250  history 50 > terminal_history.txt
