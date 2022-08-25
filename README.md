@@ -1,4 +1,4 @@
-# Module 2 Challenge - Home Loan Application 
+# Home Loan Application 
 
 This project will help those who want to find a bank that will give them a desired home loan. The user must input their credit score, monthly income, debt, desired loan amount, and the value of the house they will use their loan to buy. The application will then provide a list of banks that will most likely allow the user to take out the desired loan based on the credit score, debt-to-income ratio and loan-to-value ratio calculated within the app. 
 
